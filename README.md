@@ -156,6 +156,10 @@ userSchema.path('passwordHash')
       }
     }
   });
+  
+userSchema.methods.validatePassword = function(password) {
+	return bcrypt.compareSync(password, this.passwordHash);
+}
 ```
 
 Our User schema should now be fully setup and ready to be used!
@@ -365,7 +369,7 @@ We're so close! We need to require our newly created router within our `app.js` 
 var routes = require('./config/routes');
 ```
 
-Now let's finally use it by adding it in below where we require `bodyParser`:
+Now let's finally use it by adding it in **below** where we require `bodyParser`:
 
 ```
 app.use('/api', routes);
